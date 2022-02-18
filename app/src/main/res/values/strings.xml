@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GitSearch</string>
+
+    <string name="input_query_placeholder">검색어를 입력해주세요.</string>
+    <string name="button_search">검색</string>
+
+    <string name="error_input_query_placeholder">검색어가 없어요.</string>
 </resources>

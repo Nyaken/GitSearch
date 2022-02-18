@@ -11,8 +11,8 @@ class GitSearchRepository(
 
     fun searchGitRepositories(
         query: String,
-        sort: String,
-        order: String,
+        sort: String?,
+        order: String?,
         per_page: Int,
         page: Int,
     ): Observable<Response<ResultRes>> {

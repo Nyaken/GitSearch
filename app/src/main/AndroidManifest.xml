@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.nyaken.gitsearch">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="me.nyaken.Global"
         android:allowBackup="true"
@@ -11,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitSearch">
         <activity
-            android:name=".MainActivity"
+            android:name=".home.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

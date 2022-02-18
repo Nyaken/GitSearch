@@ -23,6 +23,7 @@ abstract class BaseActivity<DataBinding : ViewDataBinding>(
 
         onNewIntent(intent)
         viewBinding()
+        setupObserve()
         initLayout()
 
     }

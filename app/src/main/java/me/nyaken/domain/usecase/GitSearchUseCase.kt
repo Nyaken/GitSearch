@@ -12,8 +12,8 @@ class GitSearchUseCase @Inject constructor(
 
     operator fun invoke(
         query: String,
-        sort: String,
-        order: String,
+        sort: String?,
+        order: String?,
         per_page: Int = DEFAULT_ITEM_SIZE,
         page: Int,
     ) = gitSearchRepository.searchGitRepositories(query, sort, order, per_page, page)

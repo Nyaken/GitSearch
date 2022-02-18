@@ -11,8 +11,8 @@ interface ApiContainer {
     @GET("/search/repositories")
     fun searchRepositories(
         @Query("q") query: String,
-        @Query("sort") sort: String,
-        @Query("order") order: String,
+        @Query("sort") sort: String?,
+        @Query("order") order: String?,
         @Query("per_page") size: Int,
         @Query("page") page: Int
     ): Observable<Response<ResultRes>>

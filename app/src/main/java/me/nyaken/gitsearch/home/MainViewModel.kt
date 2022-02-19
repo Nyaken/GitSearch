@@ -13,6 +13,7 @@ import me.nyaken.common.SearchSort
 import me.nyaken.domain.usecase.GitSearchUseCase
 import me.nyaken.gitsearch.BaseViewModel
 import me.nyaken.gitsearch.R
+import me.nyaken.network.model.Item
 import me.nyaken.utils.Event
 import javax.inject.Inject
 
@@ -65,6 +66,14 @@ class MainViewModel @Inject constructor(
             } else {
                 SearchOrder.ASC
             }
+    }
+
+    private val _clickRepositoryItem = MutableLiveData<Event<Item>>()
+    val clickRepositoryItem: LiveData<Event<Item>>
+        get() = _clickRepositoryItem
+
+    fun clickRepositoryItem(item: Item) {
+        _clickRepositoryItem.value = Event(item)
     }
 
 }

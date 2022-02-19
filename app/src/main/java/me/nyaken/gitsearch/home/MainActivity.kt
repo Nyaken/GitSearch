@@ -1,11 +1,13 @@
 package me.nyaken.gitsearch.home
 
+import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -54,6 +56,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
         })
 
+        viewModel.clickRepositoryItem.observe(this, EventObserver{
+            CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(it.html_url))
+        })
+
         binding.buttonOrder.clicks()
             .subscribeBy {
                 viewModel.selectedOrder()
@@ -100,8 +106,8 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 errorSnackbar.setAction(
                     getString(R.string.error_snackbar_throwable_detail)
                 ) {
-                    Toast.makeText(this, errorRes.documentation_url, Toast.LENGTH_LONG).show()
                     errorSnackbar.dismiss()
+                    CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(errorRes.documentation_url))
                 }
                 errorSnackbar.show()
             }

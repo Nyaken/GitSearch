@@ -9,6 +9,7 @@ import me.nyaken.common.SearchSort
 import me.nyaken.gitsearch.BaseActivity
 import me.nyaken.gitsearch.R
 import me.nyaken.gitsearch.databinding.ActivityMainBinding
+import me.nyaken.gitsearch.home.adapter.SearchResultAdapter
 import me.nyaken.utils.EventObserver
 
 @AndroidEntryPoint
@@ -25,6 +26,16 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         viewModel.showErrorToast.observe(this, EventObserver{
             Toast.makeText(this, getString(it), Toast.LENGTH_SHORT).show()
         })
+
+        viewModel.gitRepositories.observe(this, EventObserver{
+            val adapter: SearchResultAdapter? = binding.list.adapter as? SearchResultAdapter
+            if(it.isEmpty()) adapter?.clearItems()
+            else {
+                it.forEach {
+                    adapter?.addItem(it)
+                }
+            }
+        })
     }
 
     override fun initLayout() {
@@ -35,6 +46,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+        }
+
+        binding.list.apply {
+            adapter = SearchResultAdapter(viewModel)
         }
     }
 }

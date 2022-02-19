@@ -44,6 +44,7 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <EditText
+                        android:id="@+id/edittext_query"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
@@ -51,11 +52,9 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/input_query_placeholder"
                         android:imeOptions="actionSearch"
-                        android:text="@={vm.queryData}"
                         android:textSize="13sp"
                         android:singleLine="true"
-                        android:maxLines="1"
-                        android:onClick="@{() -> vm.clickSearch()}"/>
+                        android:maxLines="1"/>
 
                 </androidx.cardview.widget.CardView>
 
@@ -70,7 +69,6 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:background="?android:attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.clickSearch()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -97,7 +95,6 @@
             android:layout_marginEnd="15dp"
             android:textSize="14sp"
             android:text="@{vm.selectedOrder.toString()}"
-            android:onClick="@{() -> vm.selectedOrder()}"
             app:layout_constraintTop_toTopOf="@id/spinner_sort"
             app:layout_constraintBottom_toBottomOf="@id/spinner_sort"
             app:layout_constraintEnd_toEndOf="parent"

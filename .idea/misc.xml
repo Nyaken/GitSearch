@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3067708333333333" />
+        <entry key="app/src/main/res/layout/item_result_holder.xml" value="0.3067708333333333" />
+        <entry key="app/src/main/res/layout/item_search_result_view_holder.xml" value="0.43020833333333336" />
         <entry key="app/src/main/res/layout/item_search_sort.xml" value="0.3067708333333333" />
         <entry key="app/src/main/res/layout/item_search_sort_dropdown.xml" value="0.3067708333333333" />
       </map>

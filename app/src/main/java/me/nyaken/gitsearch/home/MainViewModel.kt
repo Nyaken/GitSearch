@@ -10,6 +10,7 @@ import me.nyaken.common.SearchSort
 import me.nyaken.domain.usecase.GitSearchUseCase
 import me.nyaken.gitsearch.BaseViewModel
 import me.nyaken.gitsearch.R
+import me.nyaken.network.model.Item
 import me.nyaken.utils.Event
 import javax.inject.Inject
 
@@ -22,6 +23,14 @@ class MainViewModel @Inject constructor(
 
     val sortsData: List<SearchSort> = SearchSort.values().toList()
 
+    private val _gitRepositories = MutableLiveData<Event<List<Item>>>()
+    val gitRepositories: LiveData<Event<List<Item>>>
+        get() = _gitRepositories
+
+    private fun gitRepositories(item: List<Item>) {
+        _gitRepositories.value = Event(item)
+    }
+
     private val _showErrorToast = MutableLiveData<Event<Int>>()
     val showErrorToast: LiveData<Event<Int>>
         get() = _showErrorToast
@@ -29,6 +38,7 @@ class MainViewModel @Inject constructor(
     private val _selectedSortKey = MutableLiveData(SearchSort.BEST_MATCH)
     fun selectedSortKey(item: SearchSort) {
         _selectedSortKey.value = item
+        clear()
         doSearch()
     }
 
@@ -39,16 +49,21 @@ class MainViewModel @Inject constructor(
         _selectedOrder.value =
             if(_selectedOrder.value == SearchOrder.ASC) SearchOrder.DESC
             else SearchOrder.ASC
-
+        clear()
         doSearch()
     }
 
     fun clickSearch() {
         queryData.value?.let {
+            clear()
             doSearch()
         } ?: run {
             _showErrorToast.value = Event(R.string.error_input_query_placeholder)
         }
+    }
+
+    fun clear() {
+        gitRepositories(emptyList())
     }
 
     private fun doSearch() {
@@ -61,8 +76,10 @@ class MainViewModel @Inject constructor(
             )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                    onNext = {
-
+                    onNext = { response ->
+                        response.body()?.let {
+                            gitRepositories(it.items)
+                        }
                     }, onError = {
 
                     }

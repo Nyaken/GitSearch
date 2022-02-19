@@ -13,7 +13,7 @@ class GitRepositoryViewHolder(
 
     fun bindView(
         viewModel: MainViewModel,
-        item: Item
+        item: Item?
     ) {
         binding.vm = viewModel
         binding.item = item

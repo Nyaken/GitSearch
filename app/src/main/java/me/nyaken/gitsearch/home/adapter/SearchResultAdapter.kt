@@ -1,36 +1,30 @@
 package me.nyaken.gitsearch.home.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import me.nyaken.gitsearch.home.MainViewModel
 import me.nyaken.gitsearch.home.adapter.holder.GitRepositoryViewHolder
 import me.nyaken.network.model.Item
 
 class SearchResultAdapter(
     private val viewModel: MainViewModel
-) : RecyclerView.Adapter<GitRepositoryViewHolder>() {
-
-    private val items: ArrayList<Item> = ArrayList()
+) : PagingDataAdapter<Item, GitRepositoryViewHolder>(DataDifferentiator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = GitRepositoryViewHolder.create(parent)
 
     override fun onBindViewHolder(holder: GitRepositoryViewHolder, position: Int) {
-        holder.bindView(viewModel, items[position])
+        holder.bindView(viewModel, getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    object DataDifferentiator : DiffUtil.ItemCallback<Item>() {
 
-    fun clearItems() {
-        notifyItemRangeRemoved(0, itemCount)
-        items.clear()
-    }
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun addItem(item: Item) {
-        items.add(item)
-        notifyItemInserted(itemCount - 1)
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem == newItem
+        }
     }
-
-    fun getAllItems() = items
 }

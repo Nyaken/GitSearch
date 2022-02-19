@@ -10,5 +10,6 @@
     <string name="item_repository_star">Star : %s</string>
     <string name="item_repository_fork">Fork : %s</string>
 
+    <string name="error_snackbar_throwable_detail">Detail</string>
     <string name="error_input_query_placeholder">검색어가 없어요.</string>
 </resources>

@@ -50,12 +50,6 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             Toast.makeText(this, getString(it), Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.queryData.observe(this, Observer{
-            if(it.isNotEmpty()) {
-                doSearch()
-            }
-        })
-
         viewModel.clickRepositoryItem.observe(this, EventObserver{
             CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(it.html_url))
         })
@@ -72,7 +66,9 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             binding.edittextQuery.editorActionEvents()
         )
             .subscribeBy {
-                viewModel.queryData(binding.edittextQuery.text.toString())
+                if(binding.edittextQuery.text.toString().isNotEmpty()) {
+                    doSearch()
+                }
             }
             .addToDisposable()
 
@@ -139,15 +135,15 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun doSearch() {
+        viewModel.queryData(binding.edittextQuery.text.toString())
         jobSearch?.cancel()
 
-        jobSearch = lifecycleScope.launch {
+        jobSearch =
             lifecycleScope.launch {
                 viewModel.listData.collectLatest {
                     adapter.submitData(it)
                 }
             }
-        }
 
         currentFocus?.run {
             imm.hideSoftInputFromWindow(this.windowToken, 0)
